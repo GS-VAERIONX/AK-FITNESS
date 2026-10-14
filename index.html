@@ -3,32 +3,852 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A K FITNESS — Premium Gym in Kalayat, Haryana</title>
-  <meta name="description" content="A K FITNESS — Ultra-luxury gym in Kalayat, Haryana. Premium equipment, expert personal training by Ajay Lamba, customized diet plans for fat loss, weight gain & muscle gain. Join the elite fitness experience." />
-  <meta name="keywords" content="gym, fitness, Kalayat, Haryana, personal training, diet plans, A K FITNESS, Ajay Lamba, premium gym, luxury gym" />
-  <meta name="author" content="A K FITNESS" />
-  <meta name="theme-color" content="#121212" />
-  <meta property="og:title" content="A K FITNESS — Premium Gym in Kalayat" />
-  <meta property="og:description" content="Ultra-luxury fitness experience. Premium equipment, expert training, customized diet plans." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>A K FITNESS — Kalayat | Premium Gym &amp; Fitness Center</title>
+  <meta name="description" content="A K FITNESS — Premium gym in Kalayat, Haryana near HDFC Bank. Personal Training, Nutrition Plans &amp; Luxury Fitness Experience. Open 5 AM – 10 PM daily." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/src/styles/variables.css" />
-  <link rel="stylesheet" href="/src/styles/global.css" />
-  <link rel="stylesheet" href="/src/styles/components.css" />
-  <link rel="stylesheet" href="/src/styles/pages.css" />
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ---- Hero decorative elements ---- */
+    .deco-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
+      pointer-events: none;
+    }
+    .deco-circle-1 { width: 600px; height: 600px; top: -150px; right: -150px; opacity: 0.3; }
+    .deco-circle-2 { width: 300px; height: 300px; bottom: 10%; left: -80px; opacity: 0.2; }
+    .section-bg-alt { background: var(--bg-secondary); }
+
+    /* ---- Contact Speed-Dial FAB ---- */
+    .speed-dial {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.6rem;
+    }
+    .speed-dial-main {
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #D4AF37, #B8960C);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(212,175,55,0.4);
+      border: 2px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 1.5rem;
+    }
+    .speed-dial-main:hover { transform: scale(1.1) rotate(15deg); }
+    .speed-dial-items {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.55rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .speed-dial.open .speed-dial-items {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    .speed-dial-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 1rem 0.55rem 0.75rem;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .speed-dial-btn:hover { transform: translateX(-4px); }
+    .speed-dial-btn .sd-icon {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+    .sd-call   { background: #1a1a1a; color: #fff; border: 1px solid rgba(212,175,55,0.3); }
+    .sd-call   .sd-icon { background: #3b82f6; }
+    .sd-wa     { background: #1a1a1a; color: #fff; border: 1px solid rgba(37,211,102,0.3); }
+    .sd-wa     .sd-icon { background: #25D366; }
+    .sd-insta  { background: #1a1a1a; color: #fff; border: 1px solid rgba(225,48,108,0.3); }
+    .sd-insta  .sd-icon { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+
+    /* ---- Diet Generator Form ---- */
+    .diet-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      margin-bottom: 2.5rem;
+    }
+    .diet-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .diet-form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 0.45rem;
+    }
+    .diet-form-group input,
+    .diet-form-group select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition);
+      box-sizing: border-box;
+    }
+    .diet-form-group input:focus,
+    .diet-form-group select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+    }
+    .diet-form-group input::placeholder { color: var(--text-muted); }
+    .diet-form-group select option { background: #161616; color: #fff; }
+    .diet-form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23A1A1A1' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    /* Generated diet result */
+    #diet-result { display: none; }
+    #diet-result.visible { display: block; }
+    .diet-result-header {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.03) 100%);
+      border: 1px solid var(--gold-dim);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .diet-result-header h3 { font-size: 1.1rem; font-family: var(--font-body); font-weight: 700; }
+    .diet-result-header p { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem; }
+    .diet-result-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .generated-meals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <!-- Splash screen shown while JS loads -->
-    <div id="splash-screen" style="position:fixed;inset:0;background:#121212;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;">
-      <div style="font-family:'Montserrat',sans-serif;font-size:2.5rem;font-weight:800;color:#D4AF37;letter-spacing:3px;">A K FITNESS</div>
-      <div style="width:40px;height:3px;background:#D4AF37;margin-top:16px;border-radius:2px;animation:shimmer 1.5s infinite;"></div>
-      <style>@keyframes shimmer{0%,100%{opacity:.3}50%{opacity:1}}</style>
+
+<!-- ============================================================
+     HEADER / NAVIGATION
+     ============================================================ -->
+<header class="site-header" id="site-header">
+  <nav class="nav-container">
+    <a href="index.html" class="nav-logo" aria-label="A K FITNESS Home">
+      <img src="logo.png" alt="A K FITNESS Logo" style="width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--gold); box-shadow:0 0 10px rgba(212,175,55,0.4);" />
+      <span class="logo-text">A K <span>FITNESS</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#features">Amenities</a></li>
+      <li><a href="#pricing">Membership</a></li>
+      <li><a href="#nutrition">Nutrition</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="hours-badge">
+        <span class="pulse-dot"></span>
+        Open 5 AM – 10 PM
+      </div>
+      <a href="tel:+919053386350" class="btn btn-outline-gold btn-sm">📞 Call Now</a>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">✕</button>
+  <a href="#features" class="mobile-link">Amenities</a>
+  <a href="#pricing" class="mobile-link">Membership</a>
+  <a href="#nutrition" class="mobile-link">Nutrition</a>
+  <a href="#location" class="mobile-link">Location</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:1.5rem; width:100%; max-width:260px;">
+    <a href="tel:+919053386350" class="btn btn-gold btn-lg">📞 Call Ajay Lamba</a>
+    <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="btn btn-outline-gold btn-lg">💬 WhatsApp</a>
+    <a href="https://www.instagram.com/train_with_ajju" target="_blank" class="btn btn-ghost btn-lg">📸 @train_with_ajju</a>
+  </div>
+</div>
+
+<!-- ============================================================
+     CONTACT SPEED-DIAL FAB
+     ============================================================ -->
+<div class="speed-dial" id="speed-dial">
+  <div class="speed-dial-items">
+    <a href="tel:+919053386350" class="speed-dial-btn sd-call">
+      <span class="sd-icon">📞</span> Call Now
+    </a>
+    <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="speed-dial-btn sd-wa">
+      <span class="sd-icon">💬</span> WhatsApp
+    </a>
+    <a href="https://www.instagram.com/train_with_ajju" target="_blank" class="speed-dial-btn sd-insta">
+      <span class="sd-icon">📸</span> Instagram
+    </a>
+  </div>
+  <button class="speed-dial-main" id="speed-dial-toggle" aria-label="Contact options">☎️</button>
+</div>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="deco-circle deco-circle-1"></div>
+  <div class="deco-circle deco-circle-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-text fade-up">
+      <div class="overline">
+        Premium Fitness · Kalayat, Haryana
+      </div>
+      <h1 class="hero-title">
+        Unleash Your<br />
+        <span class="text-gold">Ultimate</span><br />
+        Potential
+      </h1>
+      <p class="hero-desc">
+        Transform your body, elevate your mindset. A K FITNESS offers world-class equipment, certified personal training, and customized nutrition plans — all under one roof.
+      </p>
+      <div class="hero-cta">
+        <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="btn btn-gold btn-lg">
+          🏋️ Book Membership
+        </a>
+        <a href="tel:+919053386350" class="btn btn-ghost btn-lg">
+          📞 Call Now
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Members</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">Rated</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">17hr</div>
+          <div class="stat-label">Daily Open</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-up fade-up-delay-2">
+      <div class="hero-gym-card">
+        <div class="glow-ring"></div>
+        <div class="hero-gym-bg"></div>
+        <div class="gym-interior-art">
+          <div class="gym-logo-large">
+            <img src="logo.png" alt="Ajay Lamba A K FITNESS" style="width:96px; height:96px; border-radius:50%; object-fit:cover; margin:0 auto 1rem; border:3px solid var(--gold); box-shadow:0 0 25px rgba(212,175,55,0.5); display:block;" />
+            <span class="full-name" style="font-size:1.1rem; letter-spacing:0.25em;">A K FITNESS</span>
+            <span class="tagline-sm">Kalayat · Haryana</span>
+            <div style="margin-top:0.6rem; font-size:0.85rem; color:var(--gold); font-weight:600;">Trainer: Ajay Lamba · 9053386350</div>
+            <div style="margin-top:1.5rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+              <div style="text-align:center;">
+                <div style="font-size:1.5rem;">🏋️</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); margin-top:0.25rem;">Strength</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:1.5rem;">🥗</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); margin-top:0.25rem;">Nutrition</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:1.5rem;">🏃</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); margin-top:0.25rem;">Cardio</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:1.5rem;">🧘</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); margin-top:0.25rem;">Wellness</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-overlay">
+          <div class="hero-card-info">
+            <div>
+              <div style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em;">Near HDFC Bank</div>
+              <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary);">Kalayat, Haryana</div>
+            </div>
+            <div class="badge badge-green"><span class="pulse-dot"></span>Open Now</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-floating-badge">
+        <div class="fb-num">₹1.2K</div>
+        <div class="fb-label">/ Month</div>
+      </div>
+      <div class="hero-floating-badge2">
+        <span class="pulse-dot"></span>
+        <span>5 AM – 10 PM Daily</span>
+      </div>
     </div>
   </div>
-  <script type="module" src="/src/main.js"></script>
+</section>
+
+<!-- ============================================================
+     AMENITIES / FEATURES
+     ============================================================ -->
+<section id="features" class="section-bg-alt">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <span class="section-label">World-Class Facilities</span>
+      <h2 class="section-title">Everything You Need to <span class="text-gold">Perform</span></h2>
+      <p class="section-subtitle">Premium equipment, expert guidance, and an environment designed for results.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">💪</div>
+        <h3>Heavy Iron Zone</h3>
+        <p>Full free-weight section with barbells, dumbbells up to 50 kg, power racks, and squat stations.</p>
+      </div>
+      <div class="feature-card fade-up fade-up-delay-1">
+        <div class="feature-icon">🏃</div>
+        <h3>Cardio Studio</h3>
+        <p>Treadmills, bikes, rowing machines, and ellipticals — perfect for warm-up or HIIT sessions.</p>
+      </div>
+      <div class="feature-card fade-up fade-up-delay-2">
+        <div class="feature-icon">🎯</div>
+        <h3>Personal Training</h3>
+        <p>Certified trainer Ajay Lamba with customized programs designed around your body type and fitness goals.</p>
+      </div>
+      <div class="feature-card fade-up fade-up-delay-3">
+        <div class="feature-icon">🥗</div>
+        <h3>Nutrition Plans</h3>
+        <p>Personalized diet charts for fat loss and muscle gain, generated based on your body stats and goals.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🔒</div>
+        <h3>Dedicated Lockers</h3>
+        <p>Secure personal lockers available for members — your belongings are protected, always.</p>
+      </div>
+      <div class="feature-card fade-up fade-up-delay-1">
+        <div class="feature-icon">⏰</div>
+        <h3>17 Hours Open</h3>
+        <p>5:00 AM to 10:00 PM daily — train on your schedule, whether you're an early bird or night owl.</p>
+      </div>
+      <div class="feature-card fade-up fade-up-delay-2">
+        <div class="feature-icon">📞</div>
+        <h3>Direct Trainer Access</h3>
+        <p>Call, WhatsApp, or Instagram DM trainer Ajay Lamba directly for queries, scheduling, or guidance.</p>
+      </div>
+      <div class="feature-card fade-up fade-up-delay-3">
+        <div class="feature-icon">💬</div>
+        <h3>WhatsApp Support</h3>
+        <p>Instant support via WhatsApp — membership queries, schedule changes, and payment confirmation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================
+     PRICING / MEMBERSHIP TIERS
+     ============================================================ -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <span class="section-label">Membership Plans</span>
+      <h2 class="section-title">Choose Your <span class="text-gold">Journey</span></h2>
+      <p class="section-subtitle">Transparent pricing, zero hidden fees. Select the plan that fits your goals and budget.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- Monthly -->
+      <div class="pricing-card fade-up">
+        <div class="plan-name">Monthly</div>
+        <div class="plan-price"><sup>₹</sup>1,200</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-desc">Perfect for those starting out or visiting short-term.</div>
+        <hr class="plan-divider" />
+        <ul class="plan-features">
+          <li><span class="check">✦</span> Full gym access (5 AM–10 PM)</li>
+          <li><span class="check">✦</span> All equipment included</li>
+          <li><span class="check">✦</span> Cardio &amp; strength zones</li>
+          <li><span class="check">✦</span> Diet plan generator</li>
+          <li><span class="check">✦</span> WhatsApp support</li>
+          <li><span class="cross">–</span> Personal training</li>
+          <li><span class="cross">–</span> Dedicated locker</li>
+        </ul>
+        <div class="plan-cta">
+          <button class="btn btn-outline-gold btn-full" onclick="openPaymentModal('Monthly', '₹1,200')">Pay &amp; Confirm Plan</button>
+        </div>
+      </div>
+
+      <!-- Quarterly -->
+      <div class="pricing-card fade-up fade-up-delay-1">
+        <div class="plan-name">Quarterly</div>
+        <div class="plan-price"><sup>₹</sup>3,000</div>
+        <div class="plan-period">per 3 months</div>
+        <div class="plan-desc">Save ₹600 vs monthly — ideal for committed trainers.</div>
+        <hr class="plan-divider" />
+        <ul class="plan-features">
+          <li><span class="check">✦</span> Full gym access (5 AM–10 PM)</li>
+          <li><span class="check">✦</span> All equipment included</li>
+          <li><span class="check">✦</span> Cardio &amp; strength zones</li>
+          <li><span class="check">✦</span> Diet plan generator</li>
+          <li><span class="check">✦</span> WhatsApp support</li>
+          <li><span class="cross">–</span> Personal training</li>
+          <li><span class="cross">–</span> Dedicated locker</li>
+        </ul>
+        <div class="plan-cta">
+          <button class="btn btn-outline-gold btn-full" onclick="openPaymentModal('Quarterly (3 Months)', '₹3,000')">Pay &amp; Confirm Plan</button>
+        </div>
+      </div>
+
+      <!-- Half-Yearly -->
+      <div class="pricing-card fade-up fade-up-delay-2">
+        <div class="plan-tag">Popular</div>
+        <div class="plan-name">Half-Yearly</div>
+        <div class="plan-price"><sup>₹</sup>5,500</div>
+        <div class="plan-period">per 6 months</div>
+        <div class="plan-desc">Best balance of savings and commitment — ₹917/month effective rate.</div>
+        <hr class="plan-divider" />
+        <ul class="plan-features">
+          <li><span class="check">✦</span> Full gym access (5 AM–10 PM)</li>
+          <li><span class="check">✦</span> All equipment included</li>
+          <li><span class="check">✦</span> Cardio &amp; strength zones</li>
+          <li><span class="check">✦</span> Diet plan generator</li>
+          <li><span class="check">✦</span> WhatsApp priority support</li>
+          <li><span class="cross">–</span> Personal training</li>
+          <li><span class="cross">–</span> Dedicated locker</li>
+        </ul>
+        <div class="plan-cta">
+          <button class="btn btn-outline-gold btn-full" onclick="openPaymentModal('Half-Yearly (6 Months)', '₹5,500')">Pay &amp; Confirm Plan</button>
+        </div>
+      </div>
+
+      <!-- Annual — FEATURED -->
+      <div class="pricing-card featured fade-up fade-up-delay-1">
+        <div class="plan-tag">Best Value</div>
+        <div class="plan-name">Annual</div>
+        <div class="plan-price"><sup>₹</sup>10,000</div>
+        <div class="plan-period">per year</div>
+        <div class="plan-desc">Serious about fitness? Lock in the lowest rate — only ₹833/month.</div>
+        <hr class="plan-divider" />
+        <ul class="plan-features">
+          <li><span class="check">✦</span> Full gym access (5 AM–10 PM)</li>
+          <li><span class="check">✦</span> All equipment included</li>
+          <li><span class="check">✦</span> Cardio &amp; strength zones</li>
+          <li><span class="check">✦</span> Diet plan generator</li>
+          <li><span class="check">✦</span> WhatsApp priority support</li>
+          <li><span class="cross">–</span> Personal training</li>
+          <li><span class="cross">–</span> Dedicated locker</li>
+        </ul>
+        <div class="plan-cta">
+          <button class="btn btn-gold btn-full" onclick="openPaymentModal('Annual (1 Year)', '₹10,000')">Pay &amp; Confirm Plan</button>
+        </div>
+      </div>
+
+      <!-- Personal Training -->
+      <div class="pricing-card fade-up fade-up-delay-2">
+        <div class="plan-name">Personal Training</div>
+        <div class="plan-price"><sup>₹</sup>3,500</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-desc">Includes base membership + dedicated one-on-one coaching with Ajay Lamba.</div>
+        <hr class="plan-divider" />
+        <ul class="plan-features">
+          <li><span class="check">✦</span> Full gym access (5 AM–10 PM)</li>
+          <li><span class="check">✦</span> Certified personal trainer</li>
+          <li><span class="check">✦</span> Custom workout program</li>
+          <li><span class="check">✦</span> Progress tracking</li>
+          <li><span class="check">✦</span> Diet plan generator</li>
+          <li><span class="check">✦</span> WhatsApp direct support</li>
+          <li><span class="cross">–</span> Dedicated locker</li>
+        </ul>
+        <div class="plan-cta">
+          <button class="btn btn-gold btn-full" onclick="openPaymentModal('Personal Training', '₹3,500')">Pay &amp; Confirm Plan</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA Strip -->
+    <div style="margin-top:3rem; text-align:center;" class="fade-up">
+      <p style="color:var(--text-secondary); margin-bottom:1rem;">Not sure which plan is right for you?</p>
+      <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="btn btn-ghost btn-lg">
+          💬 WhatsApp Ajay
+        </a>
+        <a href="tel:+919053386350" class="btn btn-outline-gold btn-lg">
+          📞 Call: 9053386350
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================
+     NUTRITION / DYNAMIC DIET GENERATOR
+     ============================================================ -->
+<section id="nutrition" class="section-bg-alt">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Nutrition Module</span>
+      <h2 class="section-title">Your Personalized <span class="text-gold">Diet Plan</span></h2>
+      <p class="section-subtitle">Enter your details below and get an instant, customized meal plan designed for your body and goals.</p>
+    </div>
+
+    <!-- DIET GENERATOR FORM -->
+    <div class="diet-form-card fade-up">
+      <h3 style="font-size:1.1rem; margin-bottom:0.4rem;">🧬 Diet Plan Generator</h3>
+      <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.75rem;">Fill in your stats for a personalised chart. Veg &amp; Non-Veg options included.</p>
+      <div class="diet-form-grid">
+        <div class="diet-form-group">
+          <label for="diet-height">Height (cm)</label>
+          <input type="number" id="diet-height" placeholder="e.g. 175" min="100" max="250" />
+        </div>
+        <div class="diet-form-group">
+          <label for="diet-weight">Weight (kg)</label>
+          <input type="number" id="diet-weight" placeholder="e.g. 72" min="30" max="250" />
+        </div>
+        <div class="diet-form-group">
+          <label for="diet-preference">Diet Preference</label>
+          <select id="diet-preference">
+            <option value="">Select preference</option>
+            <option value="veg">🥦 Vegetarian</option>
+            <option value="nonveg">🍗 Non-Vegetarian</option>
+          </select>
+        </div>
+        <div class="diet-form-group">
+          <label for="diet-goal">Your Goal</label>
+          <select id="diet-goal">
+            <option value="">Select goal</option>
+            <option value="fat-loss">🔥 Fat Loss</option>
+            <option value="muscle-gain">💪 Muscle Gain</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-lg" onclick="generateDietPlan()" style="width:100%; max-width:340px;">
+        ⚡ Generate My Diet Plan
+      </button>
+    </div>
+
+    <!-- GENERATED DIET RESULT -->
+    <div id="diet-result">
+      <div class="diet-result-header">
+        <div>
+          <h3 id="diet-result-title">Your Fat Loss Plan</h3>
+          <p id="diet-result-meta">Based on your stats · Personalised by A K FITNESS</p>
+        </div>
+        <div class="diet-result-badges" id="diet-result-badges"></div>
+      </div>
+      <div class="generated-meals" id="generated-meals-grid"></div>
+      <div style="margin-top:1.75rem; padding:1.25rem 1.5rem; background:var(--gold-glow); border:1px solid var(--gold-dim); border-radius:var(--radius-md);">
+        <p style="font-size:0.85rem; color:var(--text-secondary);">
+          💧 <strong style="color:var(--gold);">Hydration:</strong> Drink 3–4 litres of water daily. Have your post-workout shake within 30 mins of training. Avoid processed sugar, fried snacks, and sodas. Sleep 7–8 hours for optimal recovery.
+        </p>
+        <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="btn btn-gold btn-sm">💬 Share with Trainer Ajay</a>
+          <a href="tel:+919053386350" class="btn btn-ghost btn-sm">📞 Call for Custom Advice</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================
+     TESTIMONIALS
+     ============================================================ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <span class="section-label">Member Stories</span>
+      <h2 class="section-title">Real Results, <span class="text-gold">Real People</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Lost 12 kgs in 4 months with the fat loss plan. Trainer Ajay is exceptional — knows exactly what your body needs. Best investment I've made."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RK</div>
+          <div class="author-info">
+            <div class="name">Rahul K.</div>
+            <div class="plan">Annual Member · Kalayat</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up fade-up-delay-1">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The early 5 AM slot is perfect for my office schedule. Equipment is well-maintained and the environment is super motivating. Highly recommend!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">PS</div>
+          <div class="author-info">
+            <div class="name">Priya S.</div>
+            <div class="plan">Half-Yearly Member</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up fade-up-delay-2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Gained 8 kgs of muscle in 5 months on the bulk plan. The diet chart is practical and actually works. WhatsApp support from Ajay is instant!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MV</div>
+          <div class="author-info">
+            <div class="name">Manish V.</div>
+            <div class="plan">Personal Training · 8 months</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================
+     LOCATION & TIMINGS
+     ============================================================ -->
+<section id="location" class="section-bg-alt">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Find Us</span>
+      <h2 class="section-title">Visit <span class="text-gold">A K FITNESS</span></h2>
+      <p class="section-subtitle">Located in Kalayat near HDFC Bank, Haryana. Easy to reach, impossible to forget.</p>
+    </div>
+    <div class="map-section-inner">
+      <div class="map-embed fade-up">
+        <iframe
+          src="https://maps.google.com/maps?q=29.67874,76.2384232&z=17&hl=en&output=embed"
+          title="A K FITNESS Location Map"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <div class="map-fallback-btn">
+          <a href="https://maps.google.com/maps?q=29.67874%2C76.2384232&z=17&hl=en" target="_blank" class="btn btn-gold btn-sm">
+            📍 Open in Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="timings-card fade-up fade-up-delay-1">
+        <h3>⏰ Operating Hours</h3>
+        <div class="status">
+          <span class="pulse-dot"></span>
+          <span id="gym-status-text" style="color:#22C55E; font-weight:600;">Open Now</span>
+        </div>
+        <div class="timing-row">
+          <span class="day">Monday – Sunday</span>
+          <span class="time">5:00 AM – 10:00 PM</span>
+        </div>
+        <div class="timing-row">
+          <span class="day">All Holidays</span>
+          <span class="time">5:00 AM – 10:00 PM</span>
+        </div>
+        <div class="timing-row">
+          <span class="day">Daily Hours</span>
+          <span class="time">17 Hours</span>
+        </div>
+
+        <div class="contact-links" id="contact">
+          <a href="tel:+919053386350" class="contact-link">
+            <span class="cl-icon">📞</span>
+            Call Ajay Lamba — 9053386350
+          </a>
+          <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="contact-link">
+            <span class="cl-icon">💬</span>
+            WhatsApp – Instant Support &amp; Booking
+          </a>
+          <a href="https://maps.google.com/maps?q=29.67874%2C76.2384232&z=17&hl=en" target="_blank" class="contact-link">
+            <span class="cl-icon">📍</span>
+            Near HDFC Bank, Kalayat, Haryana
+          </a>
+          <a href="https://www.instagram.com/train_with_ajju" target="_blank" class="contact-link">
+            <span class="cl-icon">📸</span>
+            @train_with_ajju on Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BANNER
+     ============================================================ -->
+<section style="padding:5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.02) 100%); border-top:1px solid var(--border-gold); border-bottom:1px solid var(--border-gold);">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">Start Today</span>
+    <h2 class="section-title fade-up">Your Transformation <span class="text-gold">Begins Now</span></h2>
+    <p class="section-subtitle" style="margin: 0 auto 2.5rem; color:var(--text-secondary);">
+      Join 500+ members who trust A K FITNESS for their fitness journey. Call or message us and we'll get you started within minutes.
+    </p>
+    <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;" class="fade-up">
+      <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="btn btn-gold btn-lg">
+        🚀 Book Membership via WhatsApp
+      </a>
+      <a href="tel:+919053386350" class="btn btn-outline-gold btn-lg">
+        📞 Call: 9053386350
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <img src="logo.png" alt="A K FITNESS" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--gold);" />
+        <span class="logo-text">A K <span>FITNESS</span></span>
+      </div>
+      <p>Premium gym &amp; fitness center in Kalayat, Haryana. Transforming bodies and building discipline since day one. Trainer: Ajay Lamba.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/train_with_ajju" target="_blank" class="social-btn" title="Instagram">📸</a>
+        <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="social-btn" title="WhatsApp">💬</a>
+        <a href="tel:+919053386350" class="social-btn" title="Call">📞</a>
+        <a href="https://maps.google.com/maps?q=29.67874%2C76.2384232&z=17&hl=en" target="_blank" class="social-btn" title="Location">📍</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#features">Amenities</a></li>
+        <li><a href="#pricing">Membership</a></li>
+        <li><a href="#nutrition">Nutrition</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Plans</h4>
+      <ul>
+        <li><a href="#pricing">Monthly – ₹1,200</a></li>
+        <li><a href="#pricing">Quarterly – ₹3,000</a></li>
+        <li><a href="#pricing">Half-Yearly – ₹5,500</a></li>
+        <li><a href="#pricing">Annual – ₹10,000</a></li>
+        <li><a href="#pricing">Personal Training – ₹3,500</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+919053386350">📞 9053386350</a></li>
+        <li><a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank">💬 WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/train_with_ajju" target="_blank">📸 @train_with_ajju</a></li>
+        <li><a style="color:var(--gold);">Open 5 AM – 10 PM Daily</a></li>
+      </ul>
+      <div style="margin-top:1.25rem;">
+        <a href="https://wa.me/qr/ZZHPEJESZLLKP1" target="_blank" class="btn btn-gold btn-sm btn-full" style="margin-top:0.5rem;">
+          💬 Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 A K FITNESS, Kalayat, Haryana. All rights reserved. Trainer: Ajay Lamba · 9053386350</p>
+    <p style="color:var(--text-muted);">Near HDFC Bank · <a href="https://www.instagram.com/train_with_ajju" target="_blank" style="color:var(--gold);">@train_with_ajju</a></p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     PAYMENT MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="payment-modal" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('payment-modal')" aria-label="Close">✕</button>
+    <div class="modal-title" id="payment-modal-title">Confirm Your Plan 🏋️</div>
+    <div class="modal-subtitle">Scan the QR code or send payment proof via WhatsApp</div>
+
+    <div class="modal-plan-info">
+      <span class="pi-name" id="modal-plan-name">Monthly Plan</span>
+      <span class="pi-price" id="modal-plan-price">₹1,200</span>
+    </div>
+
+    <!-- Real UPI QR Code Image -->
+    <div class="qr-container">
+      <img
+        src="whatsapp-qr.jpeg"
+        alt="A K FITNESS UPI QR Code — Ajay Lamba"
+        style="width:210px; height:210px; object-fit:contain; border-radius:8px; display:block;"
+        onerror="this.style.display='none'; document.getElementById('qr-fallback').style.display='flex';"
+      />
+      <div id="qr-fallback" style="display:none; width:210px; height:210px; background:#f5f5f5; border-radius:8px; align-items:center; justify-content:center; flex-direction:column; gap:0.5rem; text-align:center; padding:1rem;">
+        <div style="font-size:2rem;">📱</div>
+        <div style="font-size:0.75rem; color:#666; font-weight:600;">Place your QR image as<br/><code>whatsapp-qr.jpeg</code></div>
+      </div>
+    </div>
+
+    <!-- Payee info -->
+    <div style="text-align:center; margin-bottom:0.75rem;">
+      <div style="font-size:0.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.2rem;">Pay to</div>
+      <div style="font-size:1rem; font-weight:700; color:var(--text-primary);">Ajay Lamba</div>
+    </div>
+
+    <p class="modal-instructions">Scan with any UPI app · PhonePe · Google Pay · Paytm · BHIM</p>
+
+    <div class="upi-id-box">
+      <span id="upi-id-text">lambaajay575@oksbi</span>
+      <button class="copy-btn" onclick="copyUPI()">📋 Copy</button>
+    </div>
+
+    <a id="whatsapp-proof-btn" href="#" target="_blank" class="btn btn-gold btn-full" style="margin-bottom:0.75rem;">
+      ✅ Send Payment Proof via WhatsApp
+    </a>
+    <button onclick="closeModal('payment-modal')" class="btn btn-ghost btn-full btn-sm">Cancel</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
 </body>
 </html>
